@@ -1,0 +1,40 @@
+log_growcube_watering:
+  alias: Log GrowCube Watering Event
+  mode: queued
+  fields:
+    plant_name:
+      name: Plant Name
+      required: true
+      selector:
+        text:
+    cycles:
+      name: Number of Watering Cycles
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 30
+          unit_of_measurement: cycles
+  sequence:
+    - variables:
+        log_sensor: sensor.growcube_watering_log
+        date: "{{ now().strftime('%Y-%m-%d') }}"
+        week: "{{ now().strftime('%G-W%V') }}"
+        event: "{{ now().strftime('%Y-%m-%d %H:%M') }} – {{ plant_name }} ({{ cycles }}×)"
+
+    - service: pyscript.set_state
+      data:
+        entity_id: "{{ log_sensor }}"
+        today: >
+          {% set today = state_attr(log_sensor, 'today') or [] %}
+          {{ today + [event] }}
+        week: >
+          {% set week_log = state_attr(log_sensor, 'week') or {} %}
+          {% set week_list = (week_log[week] if week in week_log else []) + [event] %}
+          {{ dict(week_log, **{ week: week_list }) }}
+        summary: >
+          {% set summary = state_attr(log_sensor, 'summary') or {} %}
+          {% set total = summary.get('total_cycles', 0) + cycles %}
+          {% set plants = summary.get('plants', {}) %}
+          {% set plants = dict(plants, **{plant_name: plants.get(plant_name, 0) + cycles}) %}
+          {{ dict(summary, total_cycles=total, plants=plants) }}

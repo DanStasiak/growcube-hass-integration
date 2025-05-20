@@ -6,6 +6,8 @@ from .const import DOMAIN
 STEP_USER_DATA_SCHEMA = vol.Schema({
     vol.Required("host"): str,
     vol.Required("api_key"): str,
+    vol.Optional("poll_interval", default=300): int,
+    vol.Optional("moisture_threshold", default=30): int,
 })
 
 class GrowCubeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
