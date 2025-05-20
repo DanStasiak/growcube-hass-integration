@@ -1,9 +1,0 @@
-# growcube_watering_log.yaml
-template:
-  - sensor:
-      - name: "GrowCube Watering Log"
-        state: "log"
-        attributes:
-          today: []
-          week: {}
-          summary: {}
