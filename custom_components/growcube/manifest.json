@@ -1,0 +1,11 @@
+{
+  "domain": "growcube",
+  "name": "GrowCube",
+  "version": "1.0.0",
+  "documentation": "https://github.com/DanStasiak/growcube-home-assistant",
+  "dependencies": [],
+  "codeowners": ["@DanStasiak"],
+  "requirements": [],
+  "config_flow": true,
+  "iot_class": "local_polling"
+}
