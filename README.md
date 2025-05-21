@@ -48,14 +48,12 @@ A custom Home Assistant integration for the GrowCube smart planter. Monitor soil
 
 ### Add via HACS (Recommended)
 
-1. In Home Assistant go to **Settings → Integrations → HACS**  
-2. Click **“+” → Custom repository**  
-3. Paste this repo’s URL:  
-   ```
-   https://github.com/DanStasiak/growcube-hass-integration
-   ```  
-4. Select **Integration**, click **Add**  
-5. Restart Home Assistant  
+To install via HACS:
+
+1. Open HACS in Home Assistant.
+2. Navigate to "Integrations".
+3. Click the "+" button and search for "GrowCube".
+4. Follow the prompts to install.
 
 ### Manual Install
 
