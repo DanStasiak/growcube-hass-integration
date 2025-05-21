@@ -89,16 +89,6 @@ To install via HACS:
 | **Moisture Threshold** | integer | no       | 30      | % moisture below which the **Needs Water** sensor turns `on` |
 
 ### (Optional) YAML Example
-## Configuration
-
-Add the following to your `configuration.yaml`:
-
-```yaml
-growcube:
-  username: your_username
-  password: your_password
-
-or
 
 ```yaml
 growcube:
@@ -107,7 +97,14 @@ growcube:
   poll_interval: 600            # poll every 10 minutes
   moisture_threshold: 25        # alert when < 25%
 ```
+## Configuration
 
+Add the following to your `configuration.yaml`:
+
+```yaml
+growcube:
+  username: your_username
+  password: your_password
 ---
 
 ## Entities & Attributes
