@@ -106,7 +106,7 @@ Add the following to your `configuration.yaml`:
 growcube:
   username: your_username
   password: your_password
----
+```
 
 ## Entities & Attributes
 
