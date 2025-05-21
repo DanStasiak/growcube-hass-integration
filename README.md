@@ -119,8 +119,6 @@ growcube:
 |   • `.state`                       | datetime      | e.g. “2025-05-19T18:22:00+00:00”          |
 | `binary_sensor.growcube_needs_water` | Binary Sensor | `on` if moisture < threshold; otherwise `off` |
 
----
-
 ## Lovelace Examples
 
 ### Simple Entities Card
