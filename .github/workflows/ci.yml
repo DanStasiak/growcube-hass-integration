@@ -1,4 +1,3 @@
-# .github/workflows/ci.yml
 name: CI
 
 on:
@@ -17,17 +16,15 @@ jobs:
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
-          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: >-
-            --lint-yaml
-            --lint-json
-            --lint-markdown
-            --exclude=".github/workflows/*"
+          VALIDATE_YAML: true
+          VALIDATE_JSON: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_PYTHON: true
+          FILTER_REGEX_EXCLUDE: ".github/workflows/*"
 
   format:
-    name: Format Python Code
+    name: Python Format + Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,11 +32,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.14"
+          python-version: "3.11"
 
-      - name: Install formatters
-        run: |
-          pip install black isort flake8
+      - name: Install formatters and linters
+        run: pip install black isort flake8
 
       - name: Run black
         run: black custom_components/
@@ -48,12 +44,14 @@ jobs:
         run: isort custom_components/
 
       - name: Run flake8
-        run: flake8 custom_components/
-
-      - name: Commit and push changes if any
         run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
+          flake8 custom_components/
+        continue-on-error: false  # Optional: change to true if you don't want the job to fail
+
+      - name: Auto-commit formatting changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add custom_components/
           if git diff --cached --quiet; then
             echo "No changes to commit."
@@ -68,11 +66,12 @@ jobs:
     needs: [lint, format]
     strategy:
       matrix:
-        python-version: [3.14]
+        python-version: [3.11]
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -80,5 +79,5 @@ jobs:
       - name: Install Home Assistant
         run: pip install homeassistant==2025.4.0
 
-      - name: Check HA configuration
+      - name: Run config check
         run: hass --script check_config --config .
