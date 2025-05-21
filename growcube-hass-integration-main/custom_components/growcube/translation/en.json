@@ -1,0 +1,8 @@
+{
+  "component": {
+    "growcube": {
+      "name": "GrowCube",
+      "description": "Automatic monitoring of your GrowCube soil moisture."
+    }
+  }
+}
