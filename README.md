@@ -97,6 +97,7 @@ growcube:
   poll_interval: 600            # poll every 10 minutes
   moisture_threshold: 25        # alert when < 25%
 ```
+
 ## Configuration
 
 Add the following to your `configuration.yaml`:
